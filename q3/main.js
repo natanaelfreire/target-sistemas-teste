@@ -1,19 +1,32 @@
-const faturamentos = [
-    1800, 2500, 1200, 990, 2100, 2000, 1500, 3000, 2150, 1750,
-    1800, 2500, 1200, 990, 2100, 2000, 1500, 3000, 2150, 1750,
-    1800, 2500, 1200, 990, 2100, 2000, 1500, 3000, 2150, 1750,
-]
+const fs = require('fs');
+
+let faturamentos = []
+
+try {
+    // Lê o arquivo 'faturamento.json' de forma síncrona
+    const dados = fs.readFileSync('q3/faturamentos.json', 'utf-8');
+    const jsonData = JSON.parse(dados); // Converte o texto lido para um objeto JSON
+    for (const chave in jsonData) {
+        if (jsonData.hasOwnProperty(chave)) {
+            let valor = jsonData[chave];
+            faturamentos.push(valor)
+        }
+    }
+
+} catch (erro) {
+    console.error("Erro ao ler o arquivo JSON:", erro);
+}
 
 function menorFaturamentoMes(array) {
     let menorValor = Math.min(...array);
 
-    console.log("O menor faturamento do mês é: ", menorValor);
+    return menorValor;
 }
 
 function maiorFaturamentoMes(array) {
     let maiorValor = Math.max(...array);
 
-    console.log("O maior faturamento do mês é: ", maiorValor);
+    return maiorValor;
 }
 
 function mediaFaturamentoMes(array) {
@@ -34,6 +47,6 @@ function qtdDiasDoMesFaturamentoSuperiorAMedia(array, media) {
     return qtd;
 }
 
-console.log(`Menor faturamento do mês: ${menorFaturamentoMes(faturamentos)}`);
-console.log(`Maior faturamento do mês: ${maiorFaturamentoMes(faturamentos)}`);
+console.log("O menor faturamento do mês é: ", menorFaturamentoMes(faturamentos));
+console.log("O maior faturamento do mês é: ", maiorFaturamentoMes(faturamentos));
 console.log(`Qtd de dias do mês com faturamento superior a média: ${qtdDiasDoMesFaturamentoSuperiorAMedia(faturamentos, mediaFaturamentoMes(faturamentos))}`);
